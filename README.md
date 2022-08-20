@@ -1,1 +1,2 @@
 # rock-paper-scissors
+Hopefully learn how to build a rock-paper-scissors game from scratch. I'm wondering how much of it I'll have to look up and how much I already know. Do I really know anything or is this just a facade? They do say it's not really coding until javascript. Hopefully Khan Academy doesn't fail me.
