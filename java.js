@@ -6,13 +6,13 @@ function getComputerChoice(){
     let randomOption = choices[randomIndex];
     return randomOption;
 }
-console.log(getComputerChoice());
 
+let youWin = "You win!";
+let youLose = "You lost";
+let youDraw = "Draw!";
 // single round of rock paper scissors
 function playRound(playerSelection, computerSelection) {
-    let youWin = "You win!";
-    let youLose = "You lost";
-    let youDraw = "Draw!";
+
     
     if (computerSelection === playerSelection){
         return youDraw;
@@ -36,7 +36,7 @@ function playRound(playerSelection, computerSelection) {
         }
     }
 
-    else if (computerSelection === 'PAPER'){
+    else {
         if (playerSelection === 'SCISSORS'){
             return youLose;   
         }
@@ -49,9 +49,28 @@ function playRound(playerSelection, computerSelection) {
  // have the player select rock paper or scissors and get it to Uppercase.  
 let playerChoice = prompt('rock, paper, or scissors?')
 let playerSelection = playerChoice.toUpperCase();
-const computerSelection = getComputerChoice();
-
+let computerSelection = getComputerChoice();
+console.log(computerSelection);
+console.log(playerSelection);
 console.log(playRound(playerSelection, computerSelection));
 
+let round = playRound(playerSelection,computerSelection);
 
-
+function game(round){
+    let w = 0;
+    let l = 0;
+    let d = 0;
+    for (let i = 0; i < 5 ; i++){
+        if(round === youDraw){
+            d++;
+        }
+        else if (round === youWin){
+            w++;
+        }
+        else{
+            l++;
+        }
+    }    
+}
+console.log(round);
+game();
