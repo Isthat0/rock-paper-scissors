@@ -1,88 +1,155 @@
-// create array of choices
-// randomly pick rock paper, scissors.
+
+let w = 0;
+let l = 0;
+let d = 0;
+const roundWinner = document.querySelector('.outcome');
+const p = document.createElement('p');
+const playerScore = document.querySelector('.win');
+const compScore = document.querySelector('.lose');
+const drawScore = document.querySelector('.draw');
+
+//Get computer choice
 
 
-function game(){
-    let w = 0;
-    let l = 0;
-    let d = 0;
-    for (let i = 0; i < 5 ; i++){
-        //Get computer choice
-        function getComputerChoice(){
-            let choices = ['ROCK', 'PAPER', 'SCISSORS'];
-            let randomIndex = Math.floor(Math.random() * choices.length);
-            let randomOption = choices[randomIndex];
-            return randomOption;
-        }
-        
-        let youWin = "You win!";
-        let youLose = "You lost";
-        let youDraw = "Draw!";
-         // have the player select rock paper or scissors and get it to Uppercase.  
-        let playerChoice = prompt('rock, paper, or scissors?')
-        let playerSelection = playerChoice.toUpperCase();
-        let computerSelection = getComputerChoice();
-        // single round of rock paper scissors
-        function playRound(playerSelection, computerSelection) {
-        
+// single round of rock paper scissors
+
+function playRound(playerSelection, computerSelection) {
+    const updateScores = function score(w,l,d){
+        playerScore.textContent = ("Wins : " + `${w}`)
+        compScore.textContent = ("Losses : " + `${l}`)
+        drawScore.textContent = ("Draws : " + `${d}`)
+    }
+
+            if (computerSelection === playerSelection){
+                p.textContent = "DRAW!";
+                roundWinner.appendChild(p);
+                d++;
+                updateScores(w,l,d);
+            }
             
-                    if (computerSelection === playerSelection){
-                        return youDraw;
-                    }
-                    
-                    else if (computerSelection === 'ROCK'){
-                        if (playerSelection === 'SCISSORS'){
-                            return youLose;
-                        }
-                        else if (playerSelection === 'PAPER'){
-                            return youWin; 
-                        }
-                    }
-                   
-                    else if (computerSelection === 'SCISSORS'){
-                        if (playerSelection === 'PAPER'){
-                            return youLose;   
-                        }
-                        else if (playerSelection === 'ROCK'){
-                            return youWin; 
-                        }
-                    }
+            else if (computerSelection === 'ROCK'){
+                if (playerSelection === 'SCISSORS'){
                 
-                    else {
-                        if (playerSelection === 'SCISSORS'){
-                            return youLose;   
-                        }
-                        else if (playerSelection === 'ROCK'){
-                            return youWin; 
-                        } 
-                    }
+                    p.textContent = "YOU LOSE!";
+                    roundWinner.appendChild(p);
+                    l++;
+                }
+                else if (playerSelection === 'PAPER'){
                 
-        }
-        //showing the what the person and computer chose and who won the round
-        console.log(computerSelection);
-        console.log(playerSelection);
-        let round = playRound(playerSelection, computerSelection);
-        console.log(round);
-        //track how many wins, draws, and loses
-        if(round === youDraw){
-            d++;
-        }
-        else if (round === youWin){
-            w++;
-        }
-        else{
-            l++;
-        }
+                    p.textContent = "YOU WIN!";
+                    roundWinner.appendChild(p); 
+                    w++;
+                }
+                updateScores(w,l,d);
+            }
+           
+            else if (computerSelection === 'SCISSORS'){
+                if (playerSelection === 'PAPER'){
+                
+                    p.textContent = "YOU LOSE!";
+                    roundWinner.appendChild(p);  
+                    l++;
+                }
+                else if (playerSelection === 'ROCK'){
+                
+                    p.textContent = "YOU WIN!";
+                    roundWinner.appendChild(p);
+                    w++;
+                }
+                updateScores(w,l,d);
+            }
+        
+            else {
+                if (playerSelection === 'SCISSORS'){
+                
+                    p.textContent = "YOU LOSE!";
+                    roundWinner.appendChild(p);  
+                    l++; 
+                }
+                else if (playerSelection === 'ROCK'){
+                
+                    p.textContent = "YOU WIN!";
+                    roundWinner.appendChild(p);
+                    w++;
+                } 
+                updateScores(w,l,d);
+            }
+        
+}
+
+ // Make each click start of the round.  
+const rockButton = document.querySelector('.ROCK');
+const scissorsButton = document.querySelector('.SCISSORS');
+const paperButton = document.querySelector('.PAPER'); 
+// If the player chooses Rock
+rockButton.addEventListener('click', () =>{
+    const playerSelection = 'ROCK';
+    console.log(playerSelection);
+    function getComputerChoice(){
+        let choices = ['ROCK', 'PAPER', 'SCISSORS'];
+        let randomIndex = Math.floor(Math.random() * choices.length);
+        let randomOption = choices[randomIndex];
+        return randomOption;
     }
-    if (w > l){
-        console.log("You are the winner!");
+    let computerSelection = getComputerChoice();
+    console.log(computerSelection);
+    playRound(playerSelection,computerSelection);
+    overallWinner();
+})
+// If the player chooses Scissors
+scissorsButton.addEventListener('click', () =>{
+    const playerSelection = 'SCISSORS';
+    console.log(playerSelection);
+    function getComputerChoice(){
+        let choices = ['ROCK', 'PAPER', 'SCISSORS'];
+        let randomIndex = Math.floor(Math.random() * choices.length);
+        let randomOption = choices[randomIndex];
+        return randomOption;
     }
-    else if (l > w){
-        console.log("You are the loser :(");
+    let computerSelection = getComputerChoice();
+    console.log(computerSelection);
+    playRound(playerSelection,computerSelection);
+    overallWinner();
+})
+// If the player chooses Paper
+paperButton.addEventListener('click', () =>{
+    const playerSelection = 'PAPER';
+    console.log(playerSelection);
+    function getComputerChoice(){
+        let choices = ['ROCK', 'PAPER', 'SCISSORS'];
+        let randomIndex = Math.floor(Math.random() * choices.length);
+        let randomOption = choices[randomIndex];
+        return randomOption;
     }
-    else{
-        console.log ("It's a tie!");
+    let computerSelection = getComputerChoice();
+    console.log(computerSelection);
+    playRound(playerSelection,computerSelection);
+    overallWinner(); 
+})
+
+
+//Tally up the winner
+function overallWinner(){
+    roundWinner.removeChild(p);
+    if (w === 5 && l < 5 ){
+        const youWon = document.createElement('h3');
+        youWon.textContent = "You are the Winner!";
+        youWon.setAttribute('style', 'color: blue; padding: 20px; font-size: 50 px');
+        roundWinner.appendChild(youWon);
+    }
+    else if (l === 5 && w < 5 ){
+        const youlost = document.createElement('h3');
+        youlost.textContent = "You are the Loser!";
+        youlost.setAttribute('style', 'color: red; padding: 20px; font-size: 50 px');
+        roundWinner.appendChild(youlost);
+    }
+    else if (d === 5){
+        const youDraw = document.createElement('h3');
+        youDraw.textContent = "DRAW!";
+        youDraw.setAttribute('style', 'color: grey; padding: 20px; font-size: 50 px');
+        roundWinner.appendChild(youDraw);
     }
 }
 
-game();
+
+
